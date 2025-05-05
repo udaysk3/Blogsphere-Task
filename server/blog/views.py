@@ -1,5 +1,3 @@
-# blog/views.py
-
 from rest_framework import viewsets, permissions, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -46,9 +44,17 @@ class BlogPostViewSet(viewsets.ModelViewSet):
             return BlogPostListSerializer
         return BlogPostDetailSerializer
 
-    @method_decorator(cache_page(60 * 15))  # Cache for 15 minutes
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+    def get_queryset(self):
+        """
+        Return all published posts by default.
+        If search parameter is provided, filter accordingly.
+        """
+        queryset = BlogPost.objects.filter(published=True)
+
+        # We don't need to handle search here as it's managed by the SearchFilter
+        # from rest_framework. The search parameter is automatically applied.
+
+        return queryset.order_by("-created_at")  # Default ordering by newest first
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
