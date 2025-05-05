@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Styles -->
+  <style>
+    .entity {
+      fill: #f8f9fa;
+      stroke: #4a90e2;
+      stroke-width: 2;
+      rx: 6;
+      ry: 6;
+    }
+    .entity-title {
+      fill: #4a90e2;
+      rx: 6;
+      ry: 6;
+    }
+    .entity-title-text {
+      fill: white;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      text-anchor: middle;
+    }
+    .attribute-text {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      text-anchor: start;
+    }
+    .attribute-text.pk {
+      font-weight: bold;
+    }
+    .relationship {
+      stroke: #4a90e2;
+      stroke-width: 2;
+      marker-end: url(#arrow);
+      fill: none;
+    }
+    .many-marker {
+      fill: #4a90e2;
+    }
+    .fk {
+      fill: #9c27b0;
+    }
+  </style>
+
+  <!-- Arrow Marker -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+      markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a90e2"/>
+    </marker>
+    <marker id="many" viewBox="0 0 16 10" refX="16" refY="5"
+      markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 5 L 6 0 M 0 5 L 6 10 M 10 0 L 16 5 L 10 10" stroke="#4a90e2" stroke-width="1.5" fill="none"/>
+    </marker>
+  </defs>
+
+  <!-- User Entity -->
+  <rect class="entity" x="100" y="50" width="230" height="200"/>
+  <rect class="entity-title" x="100" y="50" width="230" height="40"/>
+  <text class="entity-title-text" x="215" y="75">User</text>
+  
+  <!-- User Attributes -->
+  <text class="attribute-text pk" x="110" y="110">🔑 id (PK)</text>
+  <text class="attribute-text" x="110" y="135">username (CharField, unique)</text>
+  <text class="attribute-text" x="110" y="160">email (EmailField, unique)</text>
+  <text class="attribute-text" x="110" y="185">password (CharField)</text>
+  <text class="attribute-text" x="110" y="210">first_name (CharField)</text>
+  <text class="attribute-text" x="110" y="235">last_name (CharField)</text>
+
+  <!-- BlogPost Entity -->
+  <rect class="entity" x="450" y="50" width="250" height="230"/>
+  <rect class="entity-title" x="450" y="50" width="250" height="40"/>
+  <text class="entity-title-text" x="575" y="75">BlogPost</text>
+  
+  <!-- BlogPost Attributes -->
+  <text class="attribute-text pk" x="460" y="110">🔑 id (PK)</text>
+  <text class="attribute-text" x="460" y="135">title (CharField)</text>
+  <text class="attribute-text" x="460" y="160">slug (SlugField, unique)</text>
+  <text class="attribute-text" x="460" y="185">content (TextField)</text>
+  <text class="attribute-text fk" x="460" y="210">author_id (FK) → User</text>
+  <text class="attribute-text" x="460" y="235">featured_image (ImageField)</text>
+  <text class="attribute-text" x="460" y="260">created_at (DateTimeField)</text>
+  <text class="attribute-text" x="460" y="285">updated_at (DateTimeField)</text>
+  <text class="attribute-text" x="460" y="310">published (BooleanField)</text>
+
+  <!-- Comment Entity -->
+  <rect class="entity" x="270" y="350" width="250" height="170"/>
+  <rect class="entity-title" x="270" y="350" width="250" height="40"/>
+  <text class="entity-title-text" x="395" y="375">Comment</text>
+  
+  <!-- Comment Attributes -->
+  <text class="attribute-text pk" x="280" y="410">🔑 id (PK)</text>
+  <text class="attribute-text fk" x="280" y="435">post_id (FK) → BlogPost</text>
+  <text class="attribute-text fk" x="280" y="460">author_id (FK) → User</text>
+  <text class="attribute-text" x="280" y="485">content (TextField)</text>
+  <text class="attribute-text" x="280" y="510">created_at (DateTimeField)</text>
+
+  <!-- Relationships -->
+  <!-- User to BlogPost (one-to-many) -->
+  <path class="relationship" d="M330 150 H390 Q410 150 410 170 V175 H450"/>
+  <circle class="many-marker" cx="445" cy="175" r="5"/>
+  
+  <!-- User to Comment (one-to-many) -->
+  <path class="relationship" d="M215 250 V325 Q215 350 240 350 H270"/>
+  <circle class="many-marker" cx="265" cy="350" r="5"/>
+  
+  <!-- BlogPost to Comment (one-to-many) -->
+  <path class="relationship" d="M575 280 V315 Q575 340 550 350 H520"/>
+  <circle class="many-marker" cx="515" cy="350" r="5"/>
+  
+  <!-- Legend -->
+  <rect x="600" y="450" width="180" height="130" fill="#f8f9fa" stroke="#4a90e2" stroke-width="1" rx="6" ry="6"/>
+  <text x="690" y="470" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Legend</text>
+  
+  <text x="610" y="495" class="attribute-text pk">🔑 Primary Key (PK)</text>
+  <text x="610" y="520" class="attribute-text fk">Foreign Key (FK)</text>
+  
+  <line x1="610" y1="535" x2="690" y2="535" class="relationship"/>
+  <text x="700" y="540" class="attribute-text">Relationship</text>
+  
+  <circle class="many-marker" cx="630" cy="560" r="5"/>
+  <text x="645" y="565" class="attribute-text">Many (1:N)</text>
+</svg>
